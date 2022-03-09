@@ -21,19 +21,19 @@ soup = BeautifulSoup(res.text, 'html.parser')
 
 headers_contents = soup.find_all('div','row businessCapsule--mainRow')
 
-for contents in headers_contents:
-    title = contents.find('h2','businessCapsule--name text-h2').text
-    classification = contents.find('span','businessCapsule--classification').text
-    link_web = contents.find('div','col-sm-24 businessCapsule--ctas').find('a')['href']
+for content in headers_contents:
+    title = content.find('h2','businessCapsule--name text-h2').text
+    classification = content.find('span','businessCapsule--classification').text
+    link_web = content.find('div','businessCapsule--titSpons').find('a')['href']
 
     #sorting data
     data_dict = {
         'title' : title,
         'classification' : classification,
-        'link web' : link_web
+        'link web' : link_web,
     }
 
     #mencetak datanya
-    print(data_dict)
+    #print(data_dict)
     result.append(data_dict)
 print('Jumlah datanya adalah', len(result))
