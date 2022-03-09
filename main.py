@@ -11,6 +11,7 @@ params = {
 
 headers = {'user-agent' : 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML,'
                           ' like Gecko) Chrome/99.0.4844.51 Safari/537.36'}
+base_url = 'https://www.yell.com'
 result = []
 
 res = requests.get(url, params=params, headers=headers)
@@ -24,7 +25,7 @@ headers_contents = soup.find_all('div','row businessCapsule--mainRow')
 for content in headers_contents:
     title = content.find('h2','businessCapsule--name text-h2').text
     classification = content.find('span','businessCapsule--classification').text
-    link_web = content.find('div','businessCapsule--titSpons').find('a')['href']
+    link_web = base_url + content.find('div','businessCapsule--titSpons').find('a')['href']
 
     #sorting data
     data_dict = {
@@ -34,6 +35,6 @@ for content in headers_contents:
     }
 
     #mencetak datanya
-    #print(data_dict)
+    print(data_dict)
     result.append(data_dict)
 print('Jumlah datanya adalah', len(result))
