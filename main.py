@@ -46,7 +46,7 @@ for content in headers_contents:
     }
 
     #mencetak datanya
-    print(final_data)
+    #print(final_data)
     result.append(final_data)
 print('Jumlah datanya adalah', len(result))
 
@@ -58,6 +58,16 @@ except FileExistsError:
 with open('json_result/final_data.json','w+') as json_data:
     json.dump(result, json_data)
 print('json created')
+
+#create csv
+
+df = pd.DataFrame(result)
+df.to_csv('yell_data.csv', index=False)
+df.to_excel('yell_data.xlsx', index=False)
+
+#data created
+print('Data Created Succes')
+
 
 #print (result)
 for i in result:
