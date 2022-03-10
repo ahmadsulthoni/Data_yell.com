@@ -1,5 +1,8 @@
 import requests
+import os
+import json
 from bs4 import BeautifulSoup
+import pandas as pd
 
 url = 'https://www.yell.com/ucs/UcsSearchAction.do?'
 
@@ -18,6 +21,12 @@ res = requests.get(url, params=params, headers=headers)
 
 soup = BeautifulSoup(res.text, 'html.parser')
 
+try :
+    os.mkdir('json_result')
+except FileExistsError:
+    pass
+
+
 #scraping prosess
 
 headers_contents = soup.find_all('div','row businessCapsule--mainRow')
@@ -25,16 +34,32 @@ headers_contents = soup.find_all('div','row businessCapsule--mainRow')
 for content in headers_contents:
     title = content.find('h2','businessCapsule--name text-h2').text
     classification = content.find('span','businessCapsule--classification').text
+    telephone = content.find('span','business--telephoneNumber').text
     link_web = base_url + content.find('div','businessCapsule--titSpons').find('a')['href']
 
     #sorting data
-    data_dict = {
+    final_data = {
         'title' : title,
         'classification' : classification,
+        'telephone' : telephone,
         'link web' : link_web,
     }
 
     #mencetak datanya
-    print(data_dict)
-    result.append(data_dict)
+    print(final_data)
+    result.append(final_data)
 print('Jumlah datanya adalah', len(result))
+
+try :
+    os.mkdir('json_result')
+except FileExistsError:
+    pass
+
+with open('json_result/final_data.json','w+') as json_data:
+    json.dump(result, json_data)
+print('json created')
+
+#print (result)
+for i in result:
+    print(i)
+
