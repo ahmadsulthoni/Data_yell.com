@@ -51,7 +51,7 @@ def get_all_item(searches,pages):
     soup = BeautifulSoup(res.text,'html.parser')
     hotelist = []
     results = soup.find('div', {'class':'row results--row results--capsuleList'})
-    contents = results.find_all('div', {'class':'row businessCapsule--mainRow'})
+    contents = soup.find_all('div', {'class':'row businessCapsule--mainRow'})
 
     for content in contents:
         title = content.find('h2', 'businessCapsule--name text-h2').text
@@ -94,7 +94,7 @@ def main(searches):
     output(searches, final_result)
 
 if __name__ == '__main__':
-    searches = ('restaurants')
+    searches = ('Restaurants')
     main(searches)
 #data created
 print('Data Created Succes')
